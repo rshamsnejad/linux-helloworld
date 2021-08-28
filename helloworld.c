@@ -20,5 +20,5 @@ static void __exit helloworld_exit(void)
     printk(KERN_INFO "Tchao les gonzes !\n");
 }
 
-module_init(lkm_example_init);
-module_exit(lkm_example_exit);
+module_init(helloworld_init);
+module_exit(helloworld_exit);
