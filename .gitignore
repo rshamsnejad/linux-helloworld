@@ -16,6 +16,7 @@ ubdirectories here. Add them in the ".gitignore" file
 *.so
 *.so.dbg
 *.mod.c
+*.mod
 *.i
 *.lst
 *.symtypes
