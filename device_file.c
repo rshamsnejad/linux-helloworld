@@ -18,7 +18,7 @@ static ssize_t helloworld_read // Return value : bytes read
 )
 {
     PRINT_CALL();
-    printk(KERN_INFO "Read operation : offset = %i, bytes to read = %u\n", *position, count);
+    printk(KERN_INFO "Read operation : offset = %i, bytes to read = %u\n", *position, bytes_to_read);
 
     // If we're trying to read starting from beyond the end of the "tape"
     if(*position >= READ_STRING_SIZE)
@@ -27,21 +27,21 @@ static ssize_t helloworld_read // Return value : bytes read
     }
 
     // If we're trying to read starting from inside the "tape", but going forward beyond the end
-    if( (*position + count) > READ_STRING_SIZE )
+    if( (*position + bytes_to_read) > READ_STRING_SIZE )
     {
         // We'll return only what we can
-        count = READ_STRING_SIZE - *position;
+        bytes_to_read = READ_STRING_SIZE - *position;
     }
 
     // Transfer to user buffer
-    unsigned long return_value = copy_to_user(user_buffer, (READ_STRING + *position), count);
+    unsigned long return_value = copy_to_user(user_buffer, (READ_STRING + *position), bytes_to_read);
 
     if(return_value != 0)
         return -EFAULT;
 
     // Move the "reading head" forward
-    *position += count;
+    *position += bytes_to_read;
 
     // Return the amount of read bytes
-    return count;
+    return bytes_to_read;
 }
