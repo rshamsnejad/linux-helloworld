@@ -3,21 +3,24 @@
 #include <linux/kernel.h>
 #include <linux/kgdb.h>
 
+#include "helloworld_macros.h"
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Robin SHAMSNEJAD");
 MODULE_DESCRIPTION("A simple example Linux module.");
 MODULE_VERSION("0.01");
 
+
 static int __init helloworld_init(void)
 {
-    printk(KERN_INFO "Salut les gonzes !\n");
-    kgdb_breakpoint();
+    PRINT_CALL();
+    //kgdb_breakpoint();
     return 0;
 }
 
 static void __exit helloworld_exit(void)
 {
-    printk(KERN_INFO "Tchao les gonzes !\n");
+    PRINT_CALL();
 }
 
 module_init(helloworld_init);
