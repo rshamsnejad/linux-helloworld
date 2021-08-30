@@ -3,7 +3,7 @@
 #include <linux/kernel.h>
 #include <linux/kgdb.h>
 
-#include "helloworld_macros.h"
+#include "macros.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Robin SHAMSNEJAD");
