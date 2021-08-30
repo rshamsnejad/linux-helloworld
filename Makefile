@@ -1,13 +1,28 @@
-obj-m += helloworld.o
-MY_CFLAGS += -g -DDEBUG
-ccflags-y += ${MY_CFLAGS}
-CC += ${MY_CFLAGS}
+TARGET_MODULE:=helloworld
 
-all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
-debug:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
-	EXTRA_CFLAGS="$(MY_CFLAGS)"
+# If we running by kernel building system
+ifneq ($(KERNELRELEASE),)
+	$(TARGET_MODULE)-objs := main.o
+	obj-m := $(TARGET_MODULE).o
+
+# If we are running without kernel build system
+else
+	BUILDSYSTEM_DIR:=/lib/modules/$(shell uname -r)/build
+	PWD:=$(shell pwd)
+
+
+all :
+# run kernel build system to make module
+	$(MAKE) -C $(BUILDSYSTEM_DIR) M=$(PWD) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+# run kernel build system to cleanup in current directory
+	$(MAKE) -C $(BUILDSYSTEM_DIR) M=$(PWD) clean
+
+load:
+	insmod ./$(TARGET_MODULE).ko
+
+unload:
+	rmmod ./$(TARGET_MODULE).ko
+
+endif
