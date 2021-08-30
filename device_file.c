@@ -18,7 +18,7 @@ static ssize_t helloworld_read // Return value : bytes read
 )
 {
     PRINT_CALL();
-    printk(KERN_INFO "Read operation : offset = %i, bytes to read = %u\n", *position, bytes_to_read);
+    printk(KERN_INFO "Read operation : offset = %i, bytes to read = %u\n", (int)*position, (unsigned int)bytes_to_read);
 
     // If we're trying to read starting from beyond the end of the "tape"
     if(*position >= READ_STRING_SIZE)
