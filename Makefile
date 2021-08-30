@@ -1,3 +1,6 @@
+MY_CFLAGS += -g -DDEBUG
+ccflags-y += ${MY_CFLAGS}
+CC += ${MY_CFLAGS}
 TARGET_MODULE:=helloworld
 
 # If we running by kernel building system
@@ -14,6 +17,10 @@ else
 all :
 # run kernel build system to make module
 	$(MAKE) -C $(BUILDSYSTEM_DIR) M=$(PWD) modules
+
+debug:
+	$(MAKE) -C $(BUILDSYSTEM_DIR) M=$(PWD) modules
+	EXTRA_CFLAGS="$(MY_CFLAGS)"
 
 clean:
 # run kernel build system to cleanup in current directory
