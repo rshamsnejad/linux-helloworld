@@ -5,7 +5,7 @@ TARGET_MODULE:=helloworld
 
 # If we running by kernel building system
 ifneq ($(KERNELRELEASE),)
-	$(TARGET_MODULE)-objs := main.o
+	$(TARGET_MODULE)-objs := main.o device_file.o
 	obj-m := $(TARGET_MODULE).o
 
 # If we are running without kernel build system
