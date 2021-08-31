@@ -27,7 +27,9 @@ clean:
 	$(MAKE) -C $(BUILDSYSTEM_DIR) M=$(PWD) clean
 
 load:
-	sudo insmod ./$(TARGET_MODULE).ko
+	sudo insmod ./$(TARGET_MODULE).ko && \
+	sudo cp /sys/module/$(TARGET_MODULE)/sections/.text /tmp/$(TARGET_MODULE)_text && \
+	sudo chmod a+r /tmp/$(TARGET_MODULE)_text
 
 unload:
 	sudo rmmod $(TARGET_MODULE)
