@@ -58,7 +58,7 @@ int register_device(void)
 {
 	PRINT_CALL();
 
-	int result = 0;
+	int result;
 
 	result = register_chrdev(0, helloworld_device_name, &helloworld_file_ops);
 
