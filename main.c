@@ -15,13 +15,14 @@ MODULE_VERSION("0.01");
 static int __init helloworld_init(void)
 {
 	PRINT_CALL();
-	//kgdb_breakpoint();
-	return 0;
+
+	return register_device();
 }
 
 static void __exit helloworld_exit(void)
 {
 	PRINT_CALL();
+	unregister_device();
 }
 
 module_init(helloworld_init);
