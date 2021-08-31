@@ -28,6 +28,7 @@ clean:
 
 load:
 	sudo insmod ./$(TARGET_MODULE).ko && \
+	sudo rsync /usr/lib/debug/boot/vmlinux-$(shell uname -r) /tmp/vmlinux_current && \
 	sudo cp $(TARGET_MODULE).o /tmp/ && \
 	sudo cp /sys/module/$(TARGET_MODULE)/sections/.text /tmp/$(TARGET_MODULE)_text && \
 	sudo chmod a+r /tmp/$(TARGET_MODULE)_text
