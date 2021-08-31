@@ -4,6 +4,7 @@
 #include <linux/kgdb.h>
 
 #include "macros.h"
+#include "device_file.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Robin SHAMSNEJAD");
