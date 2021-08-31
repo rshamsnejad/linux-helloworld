@@ -28,6 +28,7 @@ clean:
 
 load:
 	sudo insmod ./$(TARGET_MODULE).ko && \
+	sudo cp $(TARGET_MODULE).o /tmp/ && \
 	sudo cp /sys/module/$(TARGET_MODULE)/sections/.text /tmp/$(TARGET_MODULE)_text && \
 	sudo chmod a+r /tmp/$(TARGET_MODULE)_text
 
