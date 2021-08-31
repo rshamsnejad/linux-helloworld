@@ -30,9 +30,7 @@ static ssize_t helloworld_read // Return value : bytes read
 		bytes_to_read = READ_STRING_SIZE - *position;
 
 	// Transfer to user buffer
-	unsigned long return_value = copy_to_user(user_buffer, (READ_STRING + *position), bytes_to_read);
-
-	if (return_value != 0)
+	if (copy_to_user(user_buffer, (READ_STRING + *position), bytes_to_read) != 0)
 		return -EFAULT;
 
 	// Move the "reading head" forward
