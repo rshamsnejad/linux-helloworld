@@ -1,4 +1,10 @@
+// SPDX-License-Identifier: GPL-2.0
+
+#include <linux/fs.h>
+#include <linux/kernel.h>
+#include <linux/module.h>
 #include <linux/uaccess.h>
+#include <linux/cdev.h>
 #include "macros.h"
 
 /* This string must be seen as a "tape" : if the requested read offset goes past the size
@@ -38,4 +44,39 @@ static ssize_t helloworld_read // Return value : bytes read
 
 	// Return the amount of read bytes
 	return bytes_to_read;
+}
+
+static struct file_operations helloworld_file_ops = {
+	.owner = THIS_MODULE,
+	.read = helloworld_read,
+};
+
+static int helloworld_file_major_number;
+static const char helloworld_device_name[] = "HelloWorld device 3000";
+
+int register_device(void)
+{
+	PRINT_CALL();
+
+	int result = 0;
+
+	result = register_chrdev(0, helloworld_device_name, &helloworld_file_ops);
+
+	if (result < 0)	{
+		pr_warn("Can't register character driver / Error code = %i\n", result);
+		return result;
+	}
+
+	helloworld_file_major_number = result;
+	pr_info("Registered character driver / Major number = %i\n", helloworld_file_major_number);
+
+	return 0;
+}
+
+void unregister_device(void)
+{
+	PRINT_CALL();
+
+	if (helloworld_file_major_number != 0)
+		unregister_chrdev(helloworld_file_major_number, helloworld_device_name);
 }
